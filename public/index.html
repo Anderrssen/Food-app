@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mom's Food &amp; Symptom Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <h1>🍽️ Food &amp; Symptom Tracker</h1>
+    <nav class="tabs">
+      <button class="tab-btn active" data-tab="log">Log</button>
+      <button class="tab-btn" data-tab="week">This Week</button>
+      <button class="tab-btn" data-tab="patterns">Patterns</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- LOG TAB -->
+    <section id="tab-log" class="tab-panel active">
+      <div class="card">
+        <h2>Log food</h2>
+        <form id="food-form">
+          <label>What did she eat?
+            <input type="text" id="food-name" placeholder="e.g. scrambled eggs, coffee, bread" required />
+          </label>
+          <label>When?
+            <input type="datetime-local" id="food-time" required />
+          </label>
+          <label>Notes (optional)
+            <input type="text" id="food-notes" placeholder="e.g. large portion, new brand" />
+          </label>
+          <button type="submit">Add food</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Log how she's feeling</h2>
+        <form id="feeling-form">
+          <label>Overall
+            <div class="status-choices">
+              <label class="status-choice"><input type="radio" name="status" value="good" checked /> 🙂 Good</label>
+              <label class="status-choice"><input type="radio" name="status" value="meh" /> 😐 Off</label>
+              <label class="status-choice"><input type="radio" name="status" value="bad" /> 🤢 Ill</label>
+            </div>
+          </label>
+          <label>Severity <span id="severity-value">0</span>/5
+            <input type="range" id="feeling-severity" min="0" max="5" value="0" />
+          </label>
+          <label>Symptoms (comma separated, optional)
+            <input type="text" id="feeling-symptoms" placeholder="e.g. bloating, headache, nausea" />
+          </label>
+          <label>When?
+            <input type="datetime-local" id="feeling-time" required />
+          </label>
+          <label>Notes (optional)
+            <input type="text" id="feeling-notes" />
+          </label>
+          <button type="submit">Add feeling</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Recent entries</h2>
+        <ul id="recent-list" class="entry-list"></ul>
+      </div>
+    </section>
+
+    <!-- WEEK TAB -->
+    <section id="tab-week" class="tab-panel">
+      <div class="card">
+        <h2>Last 7 days</h2>
+        <div id="week-view"></div>
+      </div>
+    </section>
+
+    <!-- PATTERNS TAB -->
+    <section id="tab-patterns" class="tab-panel">
+      <div class="card">
+        <h2>Possible patterns</h2>
+        <p class="hint">
+          This looks at how often each food was followed within a time window by feeling off or ill.
+          It's a simple heuristic, not a diagnosis — use it to spot foods worth watching, not as medical advice.
+        </p>
+        <div class="pattern-controls">
+          <label>Look back
+            <select id="pattern-days">
+              <option value="7">7 days</option>
+              <option value="14">14 days</option>
+              <option value="30" selected>30 days</option>
+              <option value="90">90 days</option>
+            </select>
+          </label>
+          <label>Illness window
+            <select id="pattern-window">
+              <option value="2">2 hours</option>
+              <option value="4">4 hours</option>
+              <option value="8" selected>8 hours</option>
+              <option value="12">12 hours</option>
+              <option value="24">24 hours</option>
+            </select>
+          </label>
+        </div>
+        <div id="pattern-summary" class="hint"></div>
+        <table id="pattern-table">
+          <thead>
+            <tr><th>Food</th><th>Times eaten</th><th>Followed by feeling ill</th><th>Rate</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
