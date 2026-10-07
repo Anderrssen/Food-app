@@ -1,0 +1,10 @@
+# Hemmeligheder
+.env
+.env.*
+!.env.example
+
+# Shopify CLI / editor / OS
+.shopify/
+node_modules/
+.DS_Store
+*.log
