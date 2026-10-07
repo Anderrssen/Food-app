@@ -19,7 +19,10 @@ kidult-shop/
 │   ├── billedliste.md     Billeder du skal hente eller tage
 │   ├── kurv-og-forside.md Forside, fri-fragt-bjælke og tilkøb i kurven
 │   ├── designretning.md   Farver, typografi, logo
-│   └── navneforslag.md    Navneovervejelser (valgt: Big Kid Club)
+│   ├── navneforslag.md    Navneovervejelser (valgt: Big Kid Club)
+│   └── jura/              UDKAST: handelsbetingelser, fortrydelse, privatliv,
+│                          cookies, fragt, kontakt/om os, GPSR
+├── LAUNCH_CHECKLIST.md    Alt det, du selv skal gøre før åbning
 ├── .env.example           Skabelon til miljøvariabler (kopiér til .env)
 └── README.md
 ```
@@ -69,5 +72,5 @@ Dawn indeholder allerede danske oversættelser (`theme/locales/da.json`). Sæt b
 
 - [x] **Fase 1**: Fundament: repo, tema, navneforslag, designretning
 - [x] **Fase 2**: Produkt-CSV, kollektioner, forside, tilkøb og fri-fragt-bjælke i kurven
-- [ ] **Fase 3**: Handelsbetingelser, privatliv, cookies, GPSR, `LAUNCH_CHECKLIST.md`
+- [x] **Fase 3**: Handelsbetingelser, privatliv, cookies, GPSR, `LAUNCH_CHECKLIST.md`
 - [ ] **Fase 4**: TikTok-idéer, nyhedsbreve, SEO

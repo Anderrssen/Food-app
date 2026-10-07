@@ -113,3 +113,45 @@
   font-size: 1.3rem;
   color: rgba(var(--color-foreground), 0.75);
 }
+
+/* Produktsikkerhed (GPSR) */
+.bkc-safety-notice {
+  margin: 1.6rem 0;
+  padding: 1.2rem 1.4rem;
+  border-left: 0.3rem solid rgb(var(--color-button));
+  background: rgba(var(--color-foreground), 0.04);
+  font-size: 1.4rem;
+  line-height: 1.5;
+}
+.bkc-safety-notice p {
+  margin: 0;
+}
+.bkc-safety-notice p + p {
+  margin-top: 0.6rem;
+}
+.bkc-safety-list dt {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+.bkc-safety-list dt:first-child {
+  margin-top: 0;
+}
+.bkc-safety-list dd {
+  margin: 0.2rem 0 0;
+}
+.bkc-safety-missing {
+  padding: 1rem 1.2rem;
+  border: 0.2rem dashed #b3261e;
+  font-size: 1.3rem;
+}
+
+/* Footer: cookie-indstillinger som link */
+.bkc-link-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}

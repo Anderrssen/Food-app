@@ -1,0 +1,112 @@
+{% comment %}
+  Big Kid Club: digital fortrydelsesfunktion (forbrugeraftaleloven § 20 a, gældende fra 19. juni 2026).
+  Linket "Fortryd aftale" i footeren fører hertil. Kunden udfylder navn, ordrenummer og e-mail
+  og sender med knappen "Bekræft fortrydelse". Erklæringen sendes som kontaktformular til
+  butikkens e-mail.
+
+  VIGTIGT: Shopify sender ikke selv en kvittering til kunden. Du skal uden unødig forsinkelse
+  sende kunden en kvittering på e-mail med indholdet og tidspunktet (se docs/jura/fortrydelse.md).
+{% endcomment %}
+{{ 'section-contact-form.css' | asset_url | stylesheet_tag }}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="contact page-width page-width--narrow" style="padding-top: 36px; padding-bottom: 48px;">
+    <h2 class="h2">{{ section.settings.heading | escape }}</h2>
+
+    {%- form 'contact', id: 'BkcWithdrawalForm', class: 'isolate' -%}
+      {%- if form.posted_successfully? -%}
+        <div class="form-status form-status-list form__message" tabindex="-1" autofocus role="status">
+          {{- 'icon-success.svg' | inline_asset_content -}}
+          <div>
+            <p><strong>Vi har modtaget din fortrydelse</strong> <span data-bkc-received></span>.</p>
+            <p>{{ section.settings.success_text | escape }}</p>
+          </div>
+        </div>
+        <script>
+          (function () {
+            var el = document.querySelector('[data-bkc-received]');
+            if (el) el.textContent = 'den ' + new Date().toLocaleString('da-DK', { dateStyle: 'long', timeStyle: 'short' });
+          })();
+        </script>
+      {%- else -%}
+        {%- if form.errors -%}
+          <div class="form__message" role="alert">
+            {{- 'icon-error.svg' | inline_asset_content -}}
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <p class="rte">{{ section.settings.intro | escape }}</p>
+
+        <input type="hidden" name="contact[Emne]" value="FORTRYDELSE – kvittering skal sendes til kunden">
+
+        <div class="field">
+          <input class="field__input" autocomplete="name" type="text" id="BkcWithdrawal-name" name="contact[Navn]" required
+            value="{% if form.name %}{{ form.name }}{% elsif customer %}{{ customer.name }}{% endif %}" placeholder="Navn">
+          <label class="field__label" for="BkcWithdrawal-name">Navn <span aria-hidden="true">*</span></label>
+        </div>
+        <div class="field">
+          <input class="field__input" autocomplete="email" type="email" id="BkcWithdrawal-email" name="contact[email]" required
+            spellcheck="false" autocapitalize="off"
+            value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}" placeholder="E-mail">
+          <label class="field__label" for="BkcWithdrawal-email">E-mail – her sender vi kvitteringen <span aria-hidden="true">*</span></label>
+        </div>
+        <div class="field">
+          <input class="field__input" type="text" id="BkcWithdrawal-order" name="contact[Ordrenummer]" required placeholder="Ordrenummer">
+          <label class="field__label" for="BkcWithdrawal-order">Ordrenummer, fx #1001 <span aria-hidden="true">*</span></label>
+        </div>
+        <div class="field">
+          <textarea class="text-area field__input" id="BkcWithdrawal-items" name="contact[Varer der fortrydes]" placeholder="Varer"></textarea>
+          <label class="form__label field__label" for="BkcWithdrawal-items">Hvilke varer vil du fortryde? Lad feltet stå tomt, hvis det er hele ordren.</label>
+        </div>
+
+        <div class="contact__button">
+          <button type="submit" class="button">Bekræft fortrydelse</button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Fortryd aftale",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Knaptekst og felter er lovbestemte (forbrugeraftaleloven § 20 a) og kan ikke ændres her."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Overskrift",
+      "default": "Fortryd aftale"
+    },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Introtekst",
+      "default": "Du har 14 dages fortrydelsesret fra den dag, du modtager varen. Udfyld formularen, og tryk på \"Bekræft fortrydelse\". Du får en kvittering på e-mail."
+    },
+    {
+      "type": "textarea",
+      "id": "success_text",
+      "label": "Tekst efter afsendelse",
+      "default": "Du får en kvittering på e-mail med indholdet af din fortrydelse. Send varen retur senest 14 dage efter i dag. Se returadressen i vores handelsbetingelser."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farveskema",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Fortryd aftale"
+    }
+  ]
+}
+{% endschema %}

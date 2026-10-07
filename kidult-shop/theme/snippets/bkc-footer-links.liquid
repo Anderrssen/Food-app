@@ -1,0 +1,26 @@
+{% comment %}
+  Big Kid Club: faste links i footerens bundlinje.
+  - "Fortryd aftale" (forbrugeraftaleloven § 20 a). Vises kun, når siden med handle
+    fortryd-aftale findes.
+  - "Cookie-indstillinger" genåbner Shopifys cookiebanner, så kunden kan trække
+    sit samtykke tilbage. Knappen vises kun, når banneret er aktivt.
+{% endcomment %}
+{%- assign withdrawal_page = pages['fortryd-aftale'] -%}
+{%- if withdrawal_page != empty and withdrawal_page.url != blank -%}
+  <li>
+    <small class="copyright__content"><a href="{{ withdrawal_page.url }}"><strong>Fortryd aftale</strong></a></small>
+  </li>
+{%- endif -%}
+<li data-bkc-cookie-settings hidden>
+  <small class="copyright__content">
+    <button type="button" class="bkc-link-button" onclick="window.privacyBanner && window.privacyBanner.showPreferences()">
+      Cookie-indstillinger
+    </button>
+  </small>
+</li>
+<script>
+  window.addEventListener('load', function () {
+    var li = document.querySelector('[data-bkc-cookie-settings]');
+    if (li && window.privacyBanner && typeof window.privacyBanner.showPreferences === 'function') li.hidden = false;
+  });
+</script>

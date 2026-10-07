@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
+    "fortryd": {
+      "type": "bkc-fortryd-aftale",
+      "settings": {
+        "heading": "Fortryd aftale",
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "fortryd"
+  ]
+}

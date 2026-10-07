@@ -1,0 +1,79 @@
+{% comment %}
+  Big Kid Club: produktsikkerhedsoplysninger (GPSR, forordning (EU) 2023/988 art. 19).
+  Læser produkt-metafelter i navnerummet "custom" (opret dem under
+  Indstillinger → Brugerdefinerede data → Produkter, se docs/jura/gpsr.md):
+    gpsr_producent    (flere linjer)  navn, postadresse, e-mail/web
+    gpsr_eu_ansvarlig (flere linjer)  kun hvis producenten er uden for EU
+    gpsr_model        (én linje)      modelnummer/type fra emballagen
+    gpsr_alder        (én linje)      fx "14+"
+    gpsr_advarsler    (flere linjer)  advarsler ordret fra emballagen, på dansk
+
+  Advarsler og alder vises synligt ved købsknappen. Resten ligger i en fold-ud.
+  I Theme Editor vises en advarsel, hvis producentoplysningerne mangler.
+
+  Usage (custom_liquid-blok i templates/product.json):
+  {% render 'bkc-produktsikkerhed', product: product %}
+{% endcomment %}
+{%- liquid
+  assign mf = product.metafields.custom
+  assign producent = mf.gpsr_producent.value
+  assign eu_ansvarlig = mf.gpsr_eu_ansvarlig.value
+  assign model = mf.gpsr_model.value | default: product.selected_or_first_available_variant.sku
+  assign alder = mf.gpsr_alder.value
+  assign advarsler = mf.gpsr_advarsler.value
+-%}
+
+{%- if alder != blank or advarsler != blank -%}
+  <div class="bkc-safety-notice" role="note">
+    {%- if alder != blank -%}
+      <p class="bkc-safety-notice__age"><strong>Anbefalet alder: {{ alder | escape }}</strong></p>
+    {%- endif -%}
+    {%- if advarsler != blank -%}
+      <p class="bkc-safety-notice__text">
+        <span aria-hidden="true">⚠</span> <strong>Advarsel:</strong> {{ advarsler | escape | newline_to_br }}
+      </p>
+    {%- endif -%}
+  </div>
+{%- endif -%}
+
+{%- if producent != blank -%}
+  <div class="product__accordion accordion quick-add-hidden">
+    <details id="Details-bkc-gpsr-{{ product.id }}">
+      <summary>
+        <div class="summary__title">
+          {% render 'icon-accordion', icon: 'check_mark' %}
+          <h2 class="h4 accordion__title">Produktsikkerhed og producent</h2>
+        </div>
+        {{- 'icon-caret.svg' | inline_asset_content -}}
+      </summary>
+      <div class="accordion__content rte">
+        <dl class="bkc-safety-list">
+          <dt>Producent</dt>
+          <dd>{{ producent | escape | newline_to_br }}</dd>
+          {%- if eu_ansvarlig != blank -%}
+            <dt>Ansvarlig person i EU</dt>
+            <dd>{{ eu_ansvarlig | escape | newline_to_br }}</dd>
+          {%- endif -%}
+          <dt>Produkt</dt>
+          <dd>
+            {{ product.vendor | escape }} – {{ product.title | escape }}
+            {%- if model != blank %}<br>Model/varenr.: {{ model | escape }}{% endif -%}
+          </dd>
+          {%- if alder != blank -%}
+            <dt>Anbefalet alder</dt>
+            <dd>{{ alder | escape }}</dd>
+          {%- endif -%}
+          {%- if advarsler != blank -%}
+            <dt>Advarsler og sikkerhed</dt>
+            <dd>{{ advarsler | escape | newline_to_br }}</dd>
+          {%- endif -%}
+        </dl>
+      </div>
+    </details>
+  </div>
+{%- elsif request.design_mode -%}
+  <p class="bkc-safety-missing">
+    <strong>Kun synlig i Theme Editor:</strong> GPSR-oplysninger mangler på denne vare. Udfyld metafeltet
+    "gpsr_producent" (og evt. EU-ansvarlig, alder og advarsler), før varen publiceres.
+  </p>
+{%- endif -%}
