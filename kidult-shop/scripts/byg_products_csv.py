@@ -267,7 +267,26 @@ def body_html(p):
     return f"<p>{p['intro']}</p><ul>{fakta}</ul><p><strong>Hvem er den til?</strong> {p['hvem']}</p>"
 
 
+def seo(p):
+    """SEO-titel (maks. 60 tegn) og meta-beskrivelse (maks. 155 tegn) ud fra produktdata."""
+    titel = f"{p['titel']} | Big Kid Club"
+    if len(titel) > 60:
+        titel = p["titel"][:60].rstrip(" –")
+    fakta = dict(p["fakta"])
+    detaljer = []
+    if fakta.get("Antal dele", "").isdigit():
+        detaljer.append(f"{fakta['Antal dele']} dele")
+    if fakta.get("Byggetid", "").startswith("ca."):
+        detaljer.append(f"byggetid {fakta['Byggetid']}")
+    beskrivelse = f"{p['titel']} fra {p['mærke']}."
+    if detaljer:
+        beskrivelse += " " + ", ".join(detaljer).capitalize() + "."
+    beskrivelse += " Byggesæt til voksne. Fri fragt fra 499 kr."
+    return titel, beskrivelse[:155]
+
+
 def række(p):
+    seo_titel, seo_beskrivelse = seo(p)
     return {
         "Handle": p["handle"],
         "Title": p["titel"],
@@ -295,8 +314,8 @@ def række(p):
         "Image Position": "",
         "Image Alt Text": "",
         "Gift Card": "FALSE",
-        "SEO Title": "",
-        "SEO Description": "",
+        "SEO Title": seo_titel,
+        "SEO Description": seo_beskrivelse,
         "Variant Weight Unit": "g",
         "Status": "draft",
     }

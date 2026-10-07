@@ -11,7 +11,8 @@ kidult-shop/
 ├── theme/                 Custom tema baseret på Dawn 16.0.0 (Shopify)
 ├── products.csv           11 varer til Shopify-import (kladder, lager 0)
 ├── scripts/
-│   └── byg_products_csv.py   Kilden til products.csv: ret tekster og priser her
+│   ├── byg_products_csv.py   Kilden til products.csv: ret tekster og priser her
+│   └── byg_preview.py        Bygger preview/big-kid-club-preview.html
 ├── brand/                 Logo (lys/mørk, med/uden tagline) og favicon
 ├── docs/
 │   ├── produkter.md       Import, tags, kilder og TJEK-liste
@@ -20,8 +21,11 @@ kidult-shop/
 │   ├── kurv-og-forside.md Forside, fri-fragt-bjælke og tilkøb i kurven
 │   ├── designretning.md   Farver, typografi, logo
 │   ├── navneforslag.md    Navneovervejelser (valgt: Big Kid Club)
-│   └── jura/              UDKAST: handelsbetingelser, fortrydelse, privatliv,
-│                          cookies, fragt, kontakt/om os, GPSR
+│   ├── jura/              UDKAST: handelsbetingelser, fortrydelse, privatliv,
+│   │                      cookies, fragt, kontakt/om os, GPSR
+│   ├── marketing/         TikTok-idéer, nyhedsbreve, SEO
+│   └── status-og-naeste-skridt.md   Hvad du skal gøre i hver fase
+├── preview/               Klikbar forhåndsvisning (byg med scripts/byg_preview.py)
 ├── LAUNCH_CHECKLIST.md    Alt det, du selv skal gøre før åbning
 ├── .env.example           Skabelon til miljøvariabler (kopiér til .env)
 └── README.md
@@ -70,7 +74,10 @@ Dawn indeholder allerede danske oversættelser (`theme/locales/da.json`). Sæt b
 
 ## Faser
 
+Se [`docs/status-og-naeste-skridt.md`](docs/status-og-naeste-skridt.md) for hvad du skal gøre efter hver fase.
+
+
 - [x] **Fase 1**: Fundament: repo, tema, navneforslag, designretning
 - [x] **Fase 2**: Produkt-CSV, kollektioner, forside, tilkøb og fri-fragt-bjælke i kurven
 - [x] **Fase 3**: Handelsbetingelser, privatliv, cookies, GPSR, `LAUNCH_CHECKLIST.md`
-- [ ] **Fase 4**: TikTok-idéer, nyhedsbreve, SEO
+- [x] **Fase 4**: TikTok-idéer, nyhedsbreve, SEO

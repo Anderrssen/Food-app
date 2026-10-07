@@ -1,0 +1,521 @@
+<title>Big Kid Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Work+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: Dawn-temaets opbygning (header, sektioner, kurveskuffe) i Big Kid Clubs palet.
+   Bevidst ét lyst udtryk – butikken har ingen mørk tilstand. */
+:root {
+  color-scheme: light;
+  --papir: #F7F1E8;      /* standardbaggrund */
+  --birk: #EADFCB;       /* afvekslende sektioner */
+  --eg: #A9784F;         /* kun dekorativt */
+  --valnod: #3B2A1E;     /* tekst og mørke flader */
+  --patina: #2F6B5E;     /* accent: knapper, links, fragtbjælke */
+  --hvid: #FFFFFF;
+  --tekst-svag: rgba(59, 42, 30, 0.72);
+  --streg: rgba(59, 42, 30, 0.14);
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body: "Work Sans", "Helvetica Neue", Arial, sans-serif;
+  --radius-knap: 6px;
+  --radius-kort: 8px;
+  --side: min(1200px, 100%);
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--papir); color: var(--valnod); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.2; text-wrap: balance; margin: 0; }
+a { color: inherit; }
+button { font: inherit; }
+:focus-visible { outline: 2px solid var(--patina); outline-offset: 2px; }
+.wrap { width: var(--side); margin-inline: auto; padding-inline: 20px; }
+
+/* Forhåndsvisningsbjælke (ikke en del af butikken) */
+.pv { background: var(--valnod); color: var(--papir); font-size: 13px; }
+.pv .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; padding-block: 8px; }
+.pv strong { font-weight: 600; letter-spacing: .04em; }
+.pv-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.pv-tabs button { background: transparent; color: var(--papir); border: 1px solid rgba(247,241,232,.35); border-radius: 999px; padding: 3px 12px; cursor: pointer; }
+.pv-tabs button[aria-pressed="true"] { background: var(--papir); color: var(--valnod); }
+
+/* Annonceringsbjælke + header */
+.announce { background: var(--patina); color: var(--hvid); text-align: center; font-size: 13px; letter-spacing: .04em; padding: 8px 16px; }
+.header { border-bottom: 1px solid var(--streg); background: var(--papir); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+.header .wrap { display: flex; align-items: center; gap: 24px; padding-block: 18px; }
+.logo { display: inline-flex; flex-direction: column; text-decoration: none; cursor: pointer; background: none; border: 0; padding: 0; color: var(--valnod); }
+.logo span { font-family: var(--font-display); font-weight: 500; font-size: 26px; letter-spacing: .02em; line-height: 1; }
+.logo i { display: block; height: 2px; background: var(--eg); margin-top: 7px; border-radius: 2px; }
+.nav { display: flex; flex-wrap: wrap; gap: 4px 22px; font-size: 15px; }
+.nav button { background: none; border: 0; padding: 4px 0; cursor: pointer; color: var(--valnod); border-bottom: 1px solid transparent; }
+.nav button:hover, .nav button[aria-current="page"] { border-bottom-color: var(--valnod); }
+.icons { margin-left: auto; display: flex; gap: 14px; align-items: center; }
+.icon-btn { background: none; border: 0; padding: 6px; cursor: pointer; color: var(--valnod); position: relative; display: inline-grid; place-items: center; }
+.icon-btn svg { width: 22px; height: 22px; }
+.bubble { position: absolute; right: -2px; bottom: -2px; background: var(--patina); color: var(--hvid); font-size: 11px; min-width: 18px; height: 18px; border-radius: 9px; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.menu-btn { display: none; }
+
+/* Knapper */
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 28px; border-radius: var(--radius-knap); background: var(--patina); color: var(--hvid); border: 1px solid var(--patina); cursor: pointer; text-decoration: none; font-size: 15px; letter-spacing: .03em; transition: background .2s; }
+.btn:hover { background: #25574c; }
+.btn--sek { background: transparent; color: var(--valnod); border-color: var(--valnod); }
+.btn--sek:hover { background: rgba(59,42,30,.06); }
+.btn--lys { background: var(--papir); color: var(--patina); border-color: var(--papir); }
+.btn--lys:hover { background: var(--hvid); }
+
+/* Billedpladsholdere (rigtige fotos mangler endnu) */
+.ph { position: relative; background: var(--birk); border-radius: var(--radius-kort); overflow: hidden; display: grid; place-items: center; aspect-ratio: 1; max-width: 100%;
+  background-image: repeating-linear-gradient(100deg, rgba(169,120,79,.07) 0 2px, transparent 2px 11px), radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,.45), transparent 60%); }
+.ph svg { width: 42%; height: auto; color: var(--eg); }
+.ph small { position: absolute; left: 10px; bottom: 8px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: rgba(59,42,30,.55); }
+
+/* Sektioner */
+section { padding-block: 64px; }
+.s-birk { background: var(--birk); }
+.s-patina { background: var(--patina); color: var(--hvid); }
+.eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--tekst-svag); margin: 0 0 10px; }
+.h-sek { font-size: clamp(28px, 4vw, 40px); margin-bottom: 28px; }
+
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(40px, 6.4vw, 72px); letter-spacing: -.01em; }
+.hero p.lead { font-size: 18px; max-width: 34em; color: var(--tekst-svag); margin: 20px 0 28px; }
+.hero .knapper { display: flex; flex-wrap: wrap; gap: 12px; }
+.hero .ph { aspect-ratio: 4 / 3; }
+.hero-fakta { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 28px; font-size: 14px; color: var(--tekst-svag); padding: 0; list-style: none; }
+.hero-fakta li::before { content: "—"; color: var(--eg); margin-right: 8px; }
+
+.kol-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.kol { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; color: inherit; display: grid; gap: 14px; }
+.kol h3 { font-size: 22px; display: flex; align-items: center; gap: 8px; }
+.kol h3::after { content: "→"; font-family: var(--font-body); font-size: 18px; transition: transform .2s; }
+.kol:hover h3::after { transform: translateX(4px); }
+.kol p { margin: 0; font-size: 14px; color: var(--tekst-svag); }
+
+.trin { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; counter-reset: trin; }
+.trin > div { border-top: 1px solid rgba(59,42,30,.25); padding-top: 18px; min-width: 0; }
+.trin h3 { font-size: 26px; margin-bottom: 10px; }
+.trin h3 span { font-family: var(--font-body); font-size: 13px; letter-spacing: .1em; color: var(--eg); display: block; margin-bottom: 6px; }
+.trin p { margin: 0; color: var(--tekst-svag); }
+
+.prod-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px 20px; }
+.kort { background: none; border: 0; padding: 0; text-align: left; cursor: pointer; color: inherit; display: grid; gap: 10px; align-content: start; }
+.kort .ph { transition: transform .25s; }
+.kort:hover .ph { transform: translateY(-4px); }
+.kort .navn { font-size: 15px; line-height: 1.35; }
+.kort .pris { font-size: 15px; font-variant-numeric: tabular-nums; }
+.kort .meta { font-size: 12px; color: var(--tekst-svag); letter-spacing: .02em; }
+.se-alle { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.se-alle .h-sek { margin: 0; }
+.link { background: none; border: 0; padding: 0; color: var(--patina); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font-size: 15px; }
+
+.note { border: 1.5px dashed rgba(59,42,30,.35); border-radius: var(--radius-kort); padding: 18px 20px; font-size: 14px; color: var(--tekst-svag); max-width: 46em; }
+.note strong { color: var(--valnod); }
+
+.nyhed .wrap { display: grid; justify-items: center; text-align: center; gap: 14px; }
+.nyhed h2 { font-size: clamp(28px, 4vw, 40px); }
+.nyhed p { margin: 0; opacity: .88; max-width: 34em; }
+.nyhed form { display: flex; gap: 8px; width: min(460px, 100%); margin-top: 10px; flex-wrap: wrap; }
+.nyhed input { flex: 1 1 220px; min-width: 0; min-height: 46px; border-radius: var(--radius-knap); border: 1px solid rgba(255,255,255,.6); background: rgba(255,255,255,.08); color: var(--hvid); padding: 0 14px; font: inherit; }
+.nyhed input::placeholder { color: rgba(255,255,255,.75); }
+.nyhed .tak { font-size: 14px; min-height: 1.6em; }
+
+.footer { background: var(--valnod); color: var(--papir); padding-block: 48px 28px; font-size: 14px; }
+.footer .top { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+.footer h4 { font-family: var(--font-body); font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; margin: 0 0 12px; }
+.footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.footer a, .footer .flink { color: var(--papir); opacity: .85; text-decoration: none; background: none; border: 0; padding: 0; cursor: pointer; font: inherit; text-align: left; }
+.footer a:hover, .footer .flink:hover { opacity: 1; text-decoration: underline; }
+.footer .logo { color: var(--papir); }
+.footer .bund { border-top: 1px solid rgba(247,241,232,.18); margin-top: 36px; padding-top: 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; opacity: .9; }
+.footer .bund strong { font-weight: 600; }
+.footer .adr { opacity: .75; margin-top: 14px; line-height: 1.7; }
+
+/* Kollektionsside */
+.kol-top { padding-block: 48px 8px; }
+.kol-top h1 { font-size: clamp(34px, 5vw, 52px); }
+.kol-top p { color: var(--tekst-svag); max-width: 44em; margin: 14px 0 0; }
+.kol-bar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; font-size: 14px; color: var(--tekst-svag); border-bottom: 1px solid var(--streg); padding-bottom: 12px; margin-bottom: 28px; }
+
+/* Produktside */
+.pdp .wrap { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; padding-block: 40px 64px; }
+.galleri { display: grid; gap: 12px; }
+.galleri .thumbs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.galleri .thumbs .ph svg { width: 36%; }
+.vendor { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--tekst-svag); }
+.pdp h1 { font-size: clamp(30px, 3.6vw, 42px); margin: 8px 0 14px; }
+.pdp .pris { font-size: 20px; font-variant-numeric: tabular-nums; }
+.pdp .moms { font-size: 13px; color: var(--tekst-svag); margin: 4px 0 20px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; padding: 0; list-style: none; }
+.chips li { border: 1px solid var(--streg); border-radius: 999px; padding: 3px 12px; font-size: 13px; background: rgba(255,255,255,.5); }
+.antal { display: inline-flex; border: 1px solid rgba(59,42,30,.5); border-radius: var(--radius-knap); margin-bottom: 14px; }
+.antal button { width: 44px; min-height: 44px; background: none; border: 0; cursor: pointer; font-size: 18px; color: var(--valnod); }
+.antal output { width: 44px; display: grid; place-items: center; font-variant-numeric: tabular-nums; }
+.pdp .btn { width: 100%; }
+.sikkerhed { margin: 18px 0; padding: 12px 14px; border-left: 3px solid var(--patina); background: rgba(59,42,30,.04); font-size: 14px; }
+.sikkerhed p { margin: 0; }
+.beskr { font-size: 15px; }
+.beskr ul { padding-left: 18px; margin: 14px 0; }
+.beskr li { margin: 4px 0; }
+details.fold { border-top: 1px solid var(--streg); border-bottom: 1px solid var(--streg); padding: 14px 0; margin-top: 20px; }
+details.fold summary { cursor: pointer; font-family: var(--font-display); font-size: 18px; list-style: none; display: flex; justify-content: space-between; }
+details.fold summary::after { content: "+"; font-family: var(--font-body); }
+details.fold[open] summary::after { content: "–"; }
+details.fold p { font-size: 14px; color: var(--tekst-svag); margin: 12px 0 0; }
+
+/* Kurveskuffe */
+.overlay { position: fixed; inset: 0; background: rgba(59,42,30,.4); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--papir); z-index: 21; display: flex; flex-direction: column; box-shadow: -8px 0 30px rgba(59,42,30,.18); padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+.drawer header { display: flex; justify-content: space-between; align-items: center; padding: 20px 22px 12px; }
+.drawer header h2 { font-size: 26px; }
+.drawer .indhold { flex: 1; overflow-y: auto; padding: 4px 22px 16px; }
+.fragt { background: rgba(59,42,30,.05); border-radius: var(--radius-kort); padding: 12px 14px; margin-bottom: 18px; }
+.fragt p { margin: 0 0 8px; font-size: 14px; }
+.fragt .spor { height: 6px; border-radius: 6px; background: rgba(59,42,30,.12); overflow: hidden; }
+.fragt .fyld { display: block; height: 100%; background: var(--patina); border-radius: inherit; transition: width .4s ease; }
+.linje { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 14px; align-items: start; padding: 12px 0; border-bottom: 1px solid var(--streg); }
+.linje .ph svg { width: 50%; }
+.linje .navn { font-size: 14px; line-height: 1.35; }
+.linje .vendor { font-size: 11px; }
+.linje .pris { font-size: 14px; font-variant-numeric: tabular-nums; text-align: right; }
+.mini-antal { display: inline-flex; border: 1px solid var(--streg); border-radius: var(--radius-knap); margin-top: 8px; }
+.mini-antal button { width: 30px; height: 30px; border: 0; background: none; cursor: pointer; color: var(--valnod); }
+.mini-antal span { width: 28px; display: grid; place-items: center; font-size: 13px; font-variant-numeric: tabular-nums; }
+.tom { text-align: center; padding: 40px 0; }
+.tom p { color: var(--tekst-svag); }
+.upsell { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--streg); }
+.upsell h3 { font-size: 18px; margin-bottom: 12px; }
+.upsell ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.upsell li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 12px; align-items: center; }
+.upsell .ph svg { width: 50%; }
+.upsell .navn { font-size: 13px; line-height: 1.3; }
+.upsell .pris { font-size: 12px; color: var(--tekst-svag); }
+.upsell .btn { min-height: 34px; padding: 0 14px; font-size: 13px; }
+.drawer footer { border-top: 1px solid var(--streg); padding: 16px 22px 20px; display: grid; gap: 10px; }
+.drawer footer .total { display: flex; justify-content: space-between; font-size: 16px; font-variant-numeric: tabular-nums; }
+.drawer footer small { color: var(--tekst-svag); font-size: 12px; }
+.x { background: none; border: 0; font-size: 28px; line-height: 1; cursor: pointer; color: var(--valnod); padding: 4px 8px; }
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--valnod); color: var(--papir); padding: 10px 16px; border-radius: var(--radius-knap); font-size: 14px; z-index: 30; max-width: calc(100% - 32px); }
+
+@media (max-width: 900px) {
+  .nav { display: none; }
+  .nav.open { display: flex; flex-direction: column; position: absolute; left: 0; right: 0; top: 100%; background: var(--papir); padding: 12px 20px 18px; border-bottom: 1px solid var(--streg); gap: 8px; }
+  .menu-btn { display: inline-grid; }
+  .hero .wrap, .pdp .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .prod-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trin { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .footer .top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .kol-grid { grid-template-columns: minmax(0, 1fr); }
+  .footer .top { grid-template-columns: minmax(0, 1fr); }
+  section { padding-block: 44px; }
+  .header .wrap { gap: 12px; }
+  .logo span { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="pv">
+  <div class="wrap">
+    <span><strong>FORHÅNDSVISNING</strong> · Big Kid Club-temaet med rigtige tekster og priser. Fotos er pladsholdere, og kassen er ikke koblet på.</span>
+    <div class="pv-tabs" role="group" aria-label="Vis side">
+      <button type="button" data-goto="home">Forside</button>
+      <button type="button" data-goto="kol:mekaniske-modeller">Kollektion</button>
+      <button type="button" data-goto="prod:marble-explorer-kuglebane-trae">Produktside</button>
+      <button type="button" data-open-cart>Kurv</button>
+    </div>
+  </div>
+</div>
+
+<div class="announce">Fri fragt fra 499 kr. · 14 dages fortrydelsesret</div>
+<header class="header">
+  <div class="wrap">
+    <button type="button" class="icon-btn menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <button type="button" class="logo" data-goto="home" aria-label="Big Kid Club, forside"><span>big kid club</span><i></i></button>
+    <nav class="nav" id="nav" aria-label="Hovedmenu"></nav>
+    <div class="icons">
+      <button type="button" class="icon-btn" aria-label="Søg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></button>
+      <button type="button" class="icon-btn" aria-label="Konto"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.3-3.6 4.2-5.2 7.5-5.2s6.2 1.6 7.5 5.2"/></svg></button>
+      <button type="button" class="icon-btn" data-open-cart aria-label="Kurv"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 8h14l-1.2 11.2a1 1 0 0 1-1 .8H7.2a1 1 0 0 1-1-.8L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></svg><span class="bubble" id="bubble" hidden>0</span></button>
+    </div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <span class="logo"><span>big kid club</span><i></i></span>
+        <p class="adr">Byg noget med hænderne.<br>[VIRKSOMHEDSNAVN] · [ADRESSE] · CVR-nr. [CVR-NUMMER]<br>[E-MAIL]</p>
+      </div>
+      <div>
+        <h4>Kundeservice</h4>
+        <ul>
+          <li><a href="#" data-page="Handelsbetingelser">Handelsbetingelser</a></li>
+          <li><a href="#" data-page="Fragt og levering">Fragt og levering</a></li>
+          <li><a href="#" data-page="Privatlivspolitik">Privatlivspolitik</a></li>
+          <li><a href="#" data-page="Cookiepolitik">Cookiepolitik</a></li>
+          <li><a href="#" data-page="Kontakt">Kontakt</a></li>
+          <li><a href="#" data-page="Om Big Kid Club">Om os</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Få månedens byggesæt på mail</h4>
+        <p style="margin:0;opacity:.8">Højst én mail om måneden. Afmeld med ét klik.</p>
+      </div>
+    </div>
+    <div class="bund">
+      <span>© 2026, Big Kid Club</span>
+      <a href="#" data-goto="fortryd"><strong>Fortryd aftale</strong></a>
+      <button type="button" class="flink" id="cookieBtn">Cookie-indstillinger</button>
+      <span>Betaling: [BETALINGSMIDLER]</span>
+    </div>
+  </div>
+</footer>
+
+<div class="overlay" id="overlay" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+  <header><h2 id="drawerTitle">Din kurv</h2><button type="button" class="x" id="closeCart" aria-label="Luk kurv">×</button></header>
+  <div class="indhold" id="drawerBody"></div>
+  <footer id="drawerFoot"></footer>
+</aside>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const PRODUKTER = [{"handle": "golden-gate-bridge-guld-metalmodel", "titel": "Golden Gate Bridge i guld – 3D-metalmodel", "maerke": "Metal Earth", "type": "3D-metalmodel", "pris": 89, "tags": ["Tilkøb", "Sværhed: Let", "Tema: Bygninger og vartegn"], "intro": "Verdens måske mest fotograferede bro, i en guldfarvet udgave på størrelse med en kuglepen. Delene sidder i et tyndt stålark, og du knækker dem forsigtigt ud og samler dem ved at bukke små tapper gennem hullerne. Der skal hverken lim eller lodning til, men en spidstang eller pincet gør det meget nemmere. Den færdige bro er fin på skrivebordet eller i reolen.", "fakta": [["Byggetid", "Oplyses ikke af producenten. Ét ark og sværhedsgrad let gør den til et kort projekt"], ["Antal dele", "1 metalark (ca. 10 × 10 cm)"], ["Mål (færdig)", "ca. 15 × 0,8 × 4,5 cm"], ["Sværhedsgrad", "Let"], ["Anbefalet alder", "14+"]], "hvem": "Til dig, der vil prøve metalmodeller for første gang, eller som en lille ekstra gave til en, der har stået på broen."}, {"handle": "gummiged-metalmodel-farve", "titel": "Gummiged i farver – 3D-metalmodel", "maerke": "Metal Earth", "type": "3D-metalmodel", "pris": 119, "tags": ["Tilkøb", "Sværhed: Udfordrende", "Tema: Køretøjer"], "intro": "En gummiged i orange og sort stål med skovl, førerhus og store hjul. Alle dele er forfarvede, så du skal ikke male noget. Du løsner delene fra arket og bukker tapperne på plads, uden lim. Modellen er klassificeret som udfordrende af producenten, fordi mange små dele skal bukkes præcist. Det er netop det, der gør den tilfredsstillende at få færdig.", "fakta": [["Byggetid", "Oplyses ikke af producenten"], ["Antal dele", "108"], ["Mål (færdig)", "ca. 9,2 × 3,3 × 3,9 cm"], ["Sværhedsgrad", "Udfordrende"]], "hvem": "Til den tålmodige, der kan lide maskiner og fine detaljer, og som har en pincet eller spidstang ved hånden."}, {"handle": "karrusel-mini-3d-traemodel", "titel": "Karrusel – mini 3D-træmodel", "maerke": "Rolife", "type": "3D-træmodel", "pris": 99, "tags": ["Tilkøb", "Sværhed: Mellem", "Tema: Forlystelser"], "intro": "En lille, klassisk karrusel i lasercut træ med heste, tag og alle de små pynte-detaljer. Delene er nummererede og klikkes sammen uden lim, så du kan bygge den ved spisebordet en stille aften. Den færdige karrusel er en hyggelig lille figur til vindueskarmen eller reolen, og en nem gave at sende med posten.", "fakta": [["Byggetid", "Oplyses ikke af producenten"], ["Antal dele", "174"], ["Mål (færdig)", "ca. 12 × 12 × 15 cm"], ["Sværhedsgrad", "Mellem (3 ud af 5 hos producenten)"], ["Anbefalet alder", "8+"]], "hvem": "Til dig, der vil prøve et træbyggesæt uden at gå all in, eller som en lille opmærksomhed til en, der elsker tivoli."}, {"handle": "compact-racer-mekanisk-traebil", "titel": "Compact Racer – mekanisk træbil", "maerke": "Ugears", "type": "Mekanisk træmodel", "pris": 149, "tags": ["Tilkøb", "Sværhed: Let", "Tema: Køretøjer"], "intro": "En lille racerbil i træ fra Ugears, som er kendt for mekaniske modeller, der samles helt uden lim. Delene trykkes ud af træpladerne og samles efter en tegnet vejledning. Compact Racer er et af de hurtigste Ugears-sæt at bygge og derfor et godt sted at starte, hvis du vil se, om mekaniske træmodeller er noget for dig.", "fakta": [["Byggetid", "ca. 25–30 minutter"], ["Antal dele", "90"], ["Mål (færdig)", "ca. 13,3 × 3,3 × 6,2 cm"], ["Sværhedsgrad", "Let"]], "hvem": "Til begynderen, til frokostpausen, eller som tilkøb til en, der allerede har fået smag for Ugears."}, {"handle": "wheel-organizer-mekanisk-penneholder", "titel": "Wheel-Organizer 2.0 – mekanisk penneholder", "maerke": "Ugears", "type": "Mekanisk træmodel", "pris": 149, "tags": ["Tilkøb", "Sværhed: Let", "Tema: Skrivebord", "Gaveidé"], "intro": "En penneholder til skrivebordet med en lille planetgear-mekanisme indeni. Når du drejer på hjulet, kører holderne rundt. Den har plads til seks kuglepenne, blyanter eller pensler. Som alle Ugears-modeller samles den af lasercut træ uden lim eller værktøj. Et byggesæt, du faktisk bruger hver dag bagefter, og som får folk til at spørge, hvor du har den fra.", "fakta": [["Byggetid", "ca. 1 time"], ["Antal dele", "51"], ["Mål (færdig)", "ca. 11 × 9 × 9,3 cm"], ["Sværhedsgrad", "Let"], ["Anbefalet alder", "14+"]], "hvem": "Til skrivebordsnørden, kollegaen eller den studerende. Både en lille gave og et lille projekt."}, {"handle": "pet-shop-miniaturebutik", "titel": "Pet Shop – lille miniaturebutik", "maerke": "Rolife", "type": "Miniaturehus", "pris": 149, "tags": ["Tilkøb", "Sværhed: Let", "Tema: Bygninger og vartegn"], "intro": "En bitte lille dyrehandel med rød dør, gul facade og et skilt formet som et kødben. Indenfor venter en hvalp og en kat, foderposer og plejeartikler i miniformat. Delene er lavet af forfarvet træ og karton, så du ikke skal male, og de samles efter en billedvejledning, typisk uden lim og værktøj.", "fakta": [["Byggetid", "ca. 1–1,5 time"], ["Antal dele", "TJEK hos leverandør"], ["Mål (færdig)", "ca. 11,4 × 10,2 × 4,6 cm (h × b × d)"], ["Sværhedsgrad", "Let"]], "hvem": "Til dyreelskeren og til dig, der vil prøve miniaturer uden at give dig i kast med et helt hus."}, {"handle": "secret-bloomy-nook-book-nook", "titel": "Secret Bloomy Nook – book nook", "maerke": "Rolife", "type": "Book nook", "pris": 349, "tags": ["Kerne", "Sværhed: Let", "Tema: Book nook", "Gaveidé"], "intro": "En book nook er et lille diorama, der står mellem bøgerne i reolen, som et hemmeligt stræde ind i en anden verden. Secret Bloomy Nook er en blomsterfyldt gyde med små facader og detaljer, du bygger lag for lag. Producenten kalder den begyndervenlig, men med 246 dele og omkring seks timers byggetid er den et rigtigt aftenprojekt, gerne fordelt over et par gange.", "fakta": [["Byggetid", "ca. 6 timer"], ["Antal dele", "246"], ["Mål (færdig)", "ca. 14 × 14,9 × 18 cm"], ["Sværhedsgrad", "Let (begynder), men lang byggetid"], ["Anbefalet alder", "14+"]], "hvem": "Til bogelskeren, til dig, der vil have et skærmfrit projekt, og som gave til en, der har alt i forvejen."}, {"handle": "marble-explorer-kuglebane-trae", "titel": "Marble Explorer – kuglebane i træ", "maerke": "ROKR", "type": "Mekanisk træmodel", "pris": 349, "tags": ["Kerne", "Sværhed: Mellem", "Tema: Kuglebane", "Gaveidé"], "intro": "En mekanisk kuglebane i lasercut krydsfiner, hvor stålkugler løftes op og triller ned ad baner, spiraler og trapper. Du bygger den af 260 dele uden lim, og bagefter er det svært at lade være med at sætte den i gang igen og igen. Byggeriet tager omkring seks timer, og du kan følge mekanikken tage form undervejs.", "fakta": [["Byggetid", "ca. 6 timer"], ["Antal dele", "260"], ["Mål (færdig)", "ca. 25,5 × 22,9 × 20,4 cm"], ["Sværhedsgrad", "Mellem (4 ud af 6 hos producenten)"], ["Anbefalet alder", "14+"]], "hvem": "Til dig, der kan lide at forstå, hvordan ting virker. Også en oplagt gave til en ingeniør eller en, der savner sin barndoms kuglebane."}, {"handle": "pink-beauty-secret-miniaturehus", "titel": "Pink Beauty Secret – miniaturehus", "maerke": "Rolife", "type": "Miniaturehus", "pris": 379, "tags": ["Kerne", "Sværhed: Let", "Tema: Bygninger og vartegn", "Gaveidé"], "intro": "En lille skønhedsbutik i rosa nuancer med hylder, spejle og bittesmå produkter. Den er en del af Rolifes Super Creator-serie, hvor du bygger rummet op med rene linjer og mange små detaljer. Byggeriet tager omkring en time. Bemærk: tag og støvtæt dør sælges separat hos producenten, og den indbyggede LED skal bruge USB-C-strøm. Kabel og adapter følger ikke med.", "fakta": [["Byggetid", "ca. 1 time"], ["Antal dele", "115"], ["Mål (færdig)", "ca. 16,3 × 16,3 × 15,2 cm"], ["Sværhedsgrad", "Let"]], "hvem": "Til dig, der elsker miniaturer, rosa og hyggelige detaljer, og som en gave, der kan bygges på en enkelt aften."}, {"handle": "trimaran-merihobus-mekanisk-sejlbaad", "titel": "Trimaran Merihobus – mekanisk sejlbåd i træ", "maerke": "Ugears", "type": "Mekanisk træmodel", "pris": 599, "tags": ["Premium", "Sværhed: Udfordrende", "Tema: Skibe", "Gaveidé"], "intro": "En stor trimaran med tre skrog, master og sejl, bygget af 237 dele i lasercut træ uden lim eller specialværktøj. Med en højde på over en halv meter er den et samtalestykke på hylden eller i vindueskarmen. Byggetiden er 12–15 timer, så det er et projekt til flere weekender. Vejledningen er trin for trin og i farver.", "fakta": [["Byggetid", "ca. 12–15 timer"], ["Antal dele", "237"], ["Mål (færdig)", "ca. 41 × 23,5 × 56 cm"], ["Sværhedsgrad", "Udfordrende"]], "hvem": "Til sejleren, modelbyggeren og dig, der vil have et større projekt at se frem til i weekenden."}, {"handle": "dream-coffee-factory-mekanisk-kaffefabrik", "titel": "Dream Coffee Factory – mekanisk kaffefabrik med musik", "maerke": "ROKR", "type": "Mekanisk træmodel", "pris": 599, "tags": ["Premium", "Sværhed: Udfordrende", "Tema: Bygninger og vartegn", "Miniaturehus", "Gaveidé"], "intro": "En lille kaffefabrik i træ med bevægelige dele, LED-lys og spilledåse. Når den kører, bevæger mekanikken sig, og musikken spiller. Den samles med traditionelle tap-og-hul-samlinger uden lim, af 593 dele. Med omkring ti timers byggetid er den et af de største projekter i butikken. Den er både en mekanisk model og et miniaturehus.", "fakta": [["Byggetid", "ca. 10 timer"], ["Antal dele", "593"], ["Mål (færdig)", "ca. 23,7 × 16,6 × 25 cm"], ["Sværhedsgrad", "Udfordrende"]], "hvem": "Til kaffeelskeren og den erfarne bygger, eller som den store gave, der giver flere hyggelige aftener."}];
+const TERSKEL = 499, UPSELL_ANTAL = 3;
+
+const KOLLEKTIONER = {
+  "mekaniske-modeller": { titel: "Mekaniske modeller", tekst: "Træmodeller med tandhjul, fjedre og kugler, der faktisk bevæger sig, når de er bygget. Alle dele er skåret på forhånd og samles uden lim. Vælg et kort projekt til en enkelt aften eller et stort til flere weekender.", ikon: "gear", f: p => p.type === "Mekanisk træmodel" },
+  "book-nooks-miniaturehuse": { titel: "Book nooks & miniaturehuse", tekst: "Små verdener til reolen og skrivebordet. En book nook står mellem bøgerne som et hemmeligt stræde. Et miniaturehus er et rum i lommeformat fyldt med detaljer. Rolige projekter til lange aftener.", ikon: "bog", f: p => p.type === "Book nook" || p.type === "Miniaturehus" || p.tags.includes("Miniaturehus") },
+  "metalmodeller": { titel: "Metalmodeller", tekst: "Detaljerede modeller i tyndt stål, som du løsner fra et ark og samler ved at bukke små tapper, uden lim og lodning. Fylder lidt, koster lidt og ser imponerende ud på skrivebordet.", ikon: "bro", f: p => p.type === "3D-metalmodel" },
+  "gaveideer": { titel: "Gaveidéer", tekst: "Byggesæt, der er gode at give: til fødselsdagen, julen eller bare fordi. Se byggetid og sværhedsgrad på hver vare, så du finder én, der passer til modtageren.", ikon: "gave", f: p => p.tags.includes("Gaveidé") },
+  "under-150-kr": { titel: "Under 150 kr.", tekst: "Små byggesæt til en enkelt aften, som ekstra gave eller som en nem måde at prøve en ny type model på.", ikon: "bro", f: p => p.pris < 150 },
+};
+const MENU = ["mekaniske-modeller", "book-nooks-miniaturehuse", "metalmodeller", "gaveideer", "under-150-kr"];
+
+const IKONER = {
+  gear: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><circle cx="40" cy="44" r="18"/><circle cx="40" cy="44" r="6"/><circle cx="40" cy="44" r="25" stroke-dasharray="7 6.1" stroke-width="9"/><circle cx="74" cy="72" r="10"/><circle cx="74" cy="72" r="15" stroke-dasharray="5 4.4" stroke-width="7"/></svg>',
+  bog: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="14" y="22" width="12" height="60" rx="1"/><rect x="74" y="26" width="12" height="56" rx="1"/><path d="M26 82V40l12-12 12 12v42M50 82V48l12-8 12 8v34"/><path d="M33 82V64h10v18M56 60h12M56 68h12"/><circle cx="38" cy="48" r="3"/></svg>',
+  hus: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 46 50 20l32 26"/><path d="M26 40v40h48V40"/><path d="M42 80V60h16v20"/><rect x="32" y="48" width="10" height="9"/><rect x="60" y="48" width="10" height="9"/></svg>',
+  bro: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M8 66h84"/><path d="M28 30v48M72 30v48"/><path d="M28 32c8 18 20 30 22 34M72 32c-8 18-20 30-22 34M28 32C20 46 14 56 8 62M72 32c8 14 14 24 20 30"/><path d="M36 50v16M44 60v6M56 60v6M64 50v16"/></svg>',
+  karrusel: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 38 50 16l30 22Z"/><path d="M20 38h60"/><path d="M28 38v34M50 38v34M72 38v34"/><path d="M18 72h64v8H18z"/><circle cx="28" cy="56" r="4"/><circle cx="50" cy="52" r="4"/><circle cx="72" cy="58" r="4"/></svg>',
+  baad: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><path d="M50 14v58"/><path d="M50 18 76 62H50"/><path d="M50 26 30 62h20"/><path d="M14 72h72l-8 10H22z"/></svg>',
+  gave: '<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3"><rect x="20" y="40" width="60" height="42"/><rect x="16" y="30" width="68" height="12"/><path d="M50 30v52"/><path d="M50 30c-6-12-22-14-20-4 1 5 12 5 20 4Zm0 0c6-12 22-14 20-4-1 5-12 5-20 4Z"/></svg>',
+};
+const ikonFor = p => p.handle.includes("trimaran") ? "baad" : p.handle.includes("karrusel") ? "karrusel"
+  : p.type === "3D-metalmodel" ? "bro" : p.type === "Book nook" ? "bog" : p.type === "Miniaturehus" ? "hus" : "gear";
+const ph = (ikon, tekst) => `<div class="ph" role="img" aria-label="${tekst || "Billede mangler"}">${IKONER[ikon]}${tekst ? `<small>${tekst}</small>` : ""}</div>`;
+const kr = n => n.toLocaleString("da-DK", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " kr.";
+const krKort = n => (Number.isInteger(n) ? n.toLocaleString("da-DK") : n.toLocaleString("da-DK", { minimumFractionDigits: 2 })) + " kr.";
+const fakta = (p, k) => (p.fakta.find(f => f[0] === k) || [])[1] || "";
+const find = h => PRODUKTER.find(p => p.handle === h);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+const app = document.getElementById("app");
+let kurv = [];
+let visning = "home";
+
+function kortHTML(p) {
+  const tid = fakta(p, "Byggetid"), sv = fakta(p, "Sværhedsgrad").split(" (")[0].split(",")[0];
+  const meta = [tid.startsWith("ca.") ? tid : "", sv].filter(Boolean).join(" · ");
+  return `<button type="button" class="kort" data-goto="prod:${p.handle}">
+    ${ph(ikonFor(p), "Foto mangler")}
+    <span class="navn">${esc(p.titel)}</span>
+    ${meta ? `<span class="meta">${esc(meta)}</span>` : ""}
+    <span class="pris">${krKort(p.pris)}</span>
+  </button>`;
+}
+
+function forside() {
+  const gaver = PRODUKTER.filter(KOLLEKTIONER.gaveideer.f).slice(0, 4);
+  return `
+  <section class="hero"><div class="wrap">
+    <div>
+      <p class="eyebrow">Hobbysæt til voksne</p>
+      <h1>Byg noget med hænderne</h1>
+      <p class="lead">Mekaniske træmodeller, book nooks og metalmodeller til voksne. Et skærmfrit projekt til en rolig aften, eller en gave, der bliver bygget og husket.</p>
+      <div class="knapper">
+        <button type="button" class="btn" data-goto="kol:alle">Find dit næste projekt</button>
+        <button type="button" class="btn btn--sek" data-goto="kol:gaveideer">Gaveidéer</button>
+      </div>
+      <ul class="hero-fakta"><li>Fra 89 kr.</li><li>Byggetid fra 25 min. til 15 timer</li><li>Fri fragt fra 499 kr.</li></ul>
+    </div>
+    ${ph("gear", "Hero-foto: bord i dagslys med halvbygget projekt")}
+  </div></section>
+
+  <section><div class="wrap">
+    <h2 class="h-sek">Hvad vil du bygge?</h2>
+    <div class="kol-grid">
+      ${["mekaniske-modeller", "book-nooks-miniaturehuse", "metalmodeller"].map(h => {
+        const k = KOLLEKTIONER[h], n = PRODUKTER.filter(k.f).length;
+        return `<button type="button" class="kol" data-goto="kol:${h}">${ph(k.ikon, "Kollektionsfoto")}<h3>${k.titel}</h3><p>${n} byggesæt</p></button>`;
+      }).join("")}
+    </div>
+  </div></section>
+
+  <section class="s-birk"><div class="wrap">
+    <h2 class="h-sek">Sådan virker det</h2>
+    <div class="trin">
+      <div><h3><span>TRIN 1</span>Vælg</h3><p>Find et sæt, der passer til dit humør og din tid: en hurtig metalmodel til en enkelt aften eller et mekanisk projekt over flere weekender. Hver vare har byggetid og sværhedsgrad.</p></div>
+      <div><h3><span>TRIN 2</span>Byg</h3><p>Alle dele er skåret på forhånd, og der følger en trin-for-trin-vejledning med. Læg telefonen væk, sæt en kop kaffe frem, og byg et stykke ad gangen.</p></div>
+      <div><h3><span>TRIN 3</span>Udstil</h3><p>Når den sidste del sidder, har du noget at stille på hylden, skrivebordet eller i reolen mellem bøgerne. Og en god historie om, hvordan den blev til.</p></div>
+    </div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="se-alle"><h2 class="h-sek">Gaveidéer</h2><button type="button" class="link" data-goto="kol:gaveideer">Se alle</button></div>
+    <div class="prod-grid">${gaver.map(kortHTML).join("")}</div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">
+    <div class="note"><strong>Anmeldelser:</strong> Sektionen "Det siger andre byggere" er bygget ind i temaet, men vises ikke for kunderne, før du tilføjer rigtige anmeldelser.</div>
+  </div></section>
+
+  <section class="s-patina nyhed"><div class="wrap">
+    <h2>Månedens byggesæt i din indbakke</h2>
+    <p>Højst én mail om måneden med nye sæt, byggetips og gaveidéer. Du kan altid afmelde dig med ét klik.</p>
+    <form id="nyhedForm"><label for="nyEmail" class="visually-hidden" style="position:absolute;left:-9999px">E-mail</label><input id="nyEmail" type="email" placeholder="Din e-mail" required><button type="submit" class="btn btn--lys">Tilmeld</button></form>
+    <p class="tak" id="tak" role="status"></p>
+  </div></section>`;
+}
+
+function kollektion(h) {
+  const k = h === "alle" ? { titel: "Alle byggesæt", tekst: "Hele sortimentet: mekaniske træmodeller, book nooks, miniaturehuse og metalmodeller.", f: () => true } : KOLLEKTIONER[h];
+  const liste = PRODUKTER.filter(k.f);
+  return `<div class="wrap kol-top"><h1>${k.titel}</h1><p>${k.tekst}</p></div>
+  <section style="padding-top:28px"><div class="wrap">
+    <div class="kol-bar"><span>${liste.length} byggesæt</span><span>Sortér: Udvalgte</span></div>
+    <div class="prod-grid">${liste.map(kortHTML).join("")}</div>
+  </div></section>`;
+}
+
+function produkt(h) {
+  const p = find(h);
+  const alder = fakta(p, "Anbefalet alder");
+  const chips = ["Byggetid", "Antal dele", "Sværhedsgrad"].map(k => fakta(p, k)).filter(v => v && !v.startsWith("Oplyses") && v !== "TJEK hos leverandør");
+  return `<div class="pdp"><div class="wrap">
+    <div class="galleri">
+      ${ph(ikonFor(p), "Produktfoto mangler")}
+      <div class="thumbs">${["Færdig model", "I brug", "Æske og plader", "Detalje"].map(t => ph(ikonFor(p), "")).join("")}</div>
+    </div>
+    <div>
+      <div class="vendor">${esc(p.maerke)}</div>
+      <h1>${esc(p.titel)}</h1>
+      <div class="pris">${kr(p.pris)}</div>
+      <div class="moms">Inkl. moms. Fragt beregnes ved kassen.</div>
+      ${chips.length ? `<ul class="chips">${chips.map(c => `<li>${esc(c)}</li>`).join("")}</ul>` : ""}
+      <div class="antal" role="group" aria-label="Antal"><button type="button" id="minus" aria-label="Færre">−</button><output id="antal">1</output><button type="button" id="plus" aria-label="Flere">+</button></div>
+      <button type="button" class="btn" id="tilfoej" data-handle="${p.handle}">Læg i kurv</button>
+      ${alder ? `<div class="sikkerhed"><p><strong>Anbefalet alder: ${esc(alder)}</strong></p></div>` : ""}
+      <div class="beskr">
+        <p>${esc(p.intro)}</p>
+        <ul>${p.fakta.map(([k, v]) => `<li><strong>${esc(k)}:</strong> ${esc(v)}</li>`).join("")}</ul>
+        <p><strong>Hvem er den til?</strong> ${esc(p.hvem)}</p>
+      </div>
+      <details class="fold"><summary>Produktsikkerhed og producent</summary>
+        <p>Her vises producentens navn og adresse, den ansvarlige person i EU, modelnummer og advarsler fra emballagen (GPSR). Felterne udfyldes i Shopify-admin, før varen publiceres.</p>
+      </details>
+    </div>
+  </div></div>`;
+}
+
+function fortryd() {
+  return `<div class="wrap kol-top"><h1>Fortryd aftale</h1><p>Du har 14 dages fortrydelsesret fra den dag, du modtager varen. Udfyld formularen, og tryk på "Bekræft fortrydelse". Du får en kvittering på e-mail.</p></div>
+  <section style="padding-top:24px"><div class="wrap" style="max-width:640px">
+    <form id="fortrydForm" style="display:grid;gap:12px">
+      ${[["fNavn", "Navn", "text", true], ["fMail", "E-mail – her sender vi kvitteringen", "email", true], ["fOrdre", "Ordrenummer, fx #1001", "text", true]].map(([id, l, t, r]) =>
+        `<label for="${id}" style="display:grid;gap:4px;font-size:14px">${l}${r ? " *" : ""}<input id="${id}" type="${t}" ${r ? "required" : ""} style="min-height:46px;border:1px solid rgba(59,42,30,.4);border-radius:6px;padding:0 12px;font:inherit;background:#fff;color:var(--valnod)"></label>`).join("")}
+      <label for="fVarer" style="display:grid;gap:4px;font-size:14px">Hvilke varer vil du fortryde? Lad feltet stå tomt, hvis det er hele ordren.<textarea id="fVarer" rows="3" style="border:1px solid rgba(59,42,30,.4);border-radius:6px;padding:10px 12px;font:inherit;background:#fff;color:var(--valnod)"></textarea></label>
+      <button type="submit" class="btn">Bekræft fortrydelse</button>
+      <p id="fSvar" role="status" style="margin:0;font-size:14px"></p>
+    </form>
+  </div></section>`;
+}
+
+function vis(mål, scroll = true) {
+  visning = mål;
+  const [type, h] = mål.split(":");
+  app.innerHTML = type === "kol" ? kollektion(h) : type === "prod" ? produkt(h) : type === "fortryd" ? fortryd() : forside();
+  document.querySelectorAll(".nav button").forEach(b => b.setAttribute("aria-current", b.dataset.goto === mål ? "page" : "false"));
+  document.querySelectorAll(".pv-tabs [data-goto]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.goto === mål || (type === "kol" && b.dataset.goto.startsWith("kol")) || (type === "prod" && b.dataset.goto.startsWith("prod")))));
+  document.getElementById("nav").classList.remove("open");
+  if (scroll) window.scrollTo({ top: 0 });
+  bindVisning();
+}
+
+function bindVisning() {
+  const minus = document.getElementById("minus");
+  if (minus) {
+    const out = document.getElementById("antal");
+    minus.onclick = () => out.value = out.textContent = Math.max(1, +out.textContent - 1);
+    document.getElementById("plus").onclick = () => out.value = out.textContent = +out.textContent + 1;
+    document.getElementById("tilfoej").onclick = e => { læg(e.currentTarget.dataset.handle, +out.textContent); åbnKurv(); };
+  }
+  const nf = document.getElementById("nyhedForm");
+  if (nf) nf.onsubmit = e => { e.preventDefault(); document.getElementById("tak").textContent = "Tak! I den rigtige butik får du nu en velkomstmail (her sendes intet)."; nf.reset(); };
+  const ff = document.getElementById("fortrydForm");
+  if (ff) ff.onsubmit = e => { e.preventDefault(); document.getElementById("fSvar").textContent = "Vi har modtaget din fortrydelse den " + new Date().toLocaleString("da-DK", { dateStyle: "long", timeStyle: "short" }) + ". (Forhåndsvisning: intet er sendt.)"; };
+}
+
+/* Kurv: samme regler som snippets/bkc-free-shipping-bar og bkc-cart-upsell */
+function læg(handle, n = 1) {
+  const l = kurv.find(x => x.handle === handle);
+  if (l) l.antal += n; else kurv.push({ handle, antal: n });
+  tegnKurv();
+}
+function sæt(handle, n) {
+  kurv = kurv.map(x => x.handle === handle ? { ...x, antal: n } : x).filter(x => x.antal > 0);
+  tegnKurv();
+}
+function tegnKurv() {
+  const total = kurv.reduce((s, l) => s + find(l.handle).pris * l.antal, 0);
+  const antal = kurv.reduce((s, l) => s + l.antal, 0);
+  const bubble = document.getElementById("bubble");
+  bubble.hidden = antal === 0; bubble.textContent = antal;
+  const body = document.getElementById("drawerBody"), foot = document.getElementById("drawerFoot");
+  if (!kurv.length) {
+    body.innerHTML = `<div class="tom"><h3 style="font-size:22px">Din kurv er tom</h3><p>Find et projekt til næste rolige aften.</p><button type="button" class="btn" data-goto="kol:alle" data-close>Se alle byggesæt</button></div>`;
+    foot.innerHTML = ""; return;
+  }
+  const mangler = TERSKEL - total, pct = Math.min(100, Math.floor(total * 100 / TERSKEL));
+  const iKurv = new Set(kurv.map(l => l.handle));
+  const forslag = PRODUKTER.filter(p => p.tags.includes("Tilkøb") && !iKurv.has(p.handle)).slice(0, UPSELL_ANTAL);
+  body.innerHTML = `
+    <div class="fragt"><p>${mangler > 0 ? `Du mangler <strong>${krKort(mangler)}</strong> til fri fragt` : "Du har fri fragt på denne ordre"}</p><div class="spor"><span class="fyld" style="width:${pct}%"></span></div></div>
+    ${kurv.map(l => { const p = find(l.handle); return `<div class="linje">${ph(ikonFor(p), "")}<div><div class="vendor">${esc(p.maerke)}</div><div class="navn">${esc(p.titel)}</div>
+      <div class="mini-antal"><button type="button" data-saet="${p.handle}" data-n="${l.antal - 1}" aria-label="Færre">−</button><span>${l.antal}</span><button type="button" data-saet="${p.handle}" data-n="${l.antal + 1}" aria-label="Flere">+</button></div></div>
+      <div class="pris">${kr(p.pris * l.antal)}</div></div>`; }).join("")}
+    ${forslag.length ? `<div class="upsell"><h3>Tilføj til din ordre</h3><ul>${forslag.map(p => `<li>${ph(ikonFor(p), "")}<div><div class="navn">${esc(p.titel)}</div><div class="pris">${kr(p.pris)}</div></div><button type="button" class="btn btn--sek" data-add="${p.handle}" aria-label="Tilføj: ${esc(p.titel)}">Tilføj</button></li>`).join("")}</ul></div>` : ""}`;
+  foot.innerHTML = `<div class="total"><span>Subtotal</span><strong>${kr(total)}</strong></div><small>Inkl. moms. Fragt beregnes ved kassen${mangler > 0 ? " (39 kr. under 499 kr.)" : ""}.</small><button type="button" class="btn" id="kasse">Gå til kassen</button>`;
+  document.getElementById("kasse").onclick = () => toast("Forhåndsvisning: kassen er ikke koblet på.");
+}
+function åbnKurv() { tegnKurv(); document.getElementById("overlay").hidden = false; document.getElementById("drawer").hidden = false; document.getElementById("closeCart").focus(); }
+function lukKurv() { document.getElementById("overlay").hidden = true; document.getElementById("drawer").hidden = true; }
+let toastTimer;
+function toast(t) { const el = document.getElementById("toast"); el.textContent = t; el.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => el.hidden = true, 2600); }
+
+document.getElementById("nav").innerHTML = MENU.map(h => `<button type="button" data-goto="kol:${h}">${KOLLEKTIONER[h].titel}</button>`).join("");
+document.addEventListener("click", e => {
+  const g = e.target.closest("[data-goto]");
+  if (g) { e.preventDefault(); if (g.hasAttribute("data-close") || g.closest(".drawer")) lukKurv(); vis(g.dataset.goto); return; }
+  if (e.target.closest("[data-open-cart]")) { åbnKurv(); return; }
+  const a = e.target.closest("[data-add]"); if (a) { læg(a.dataset.add); return; }
+  const s = e.target.closest("[data-saet]"); if (s) { sæt(s.dataset.saet, +s.dataset.n); return; }
+  const pg = e.target.closest("[data-page]"); if (pg) { e.preventDefault(); toast(`"${pg.dataset.page}" ligger som udkast i docs/jura/.`); }
+});
+document.getElementById("overlay").onclick = lukKurv;
+document.getElementById("closeCart").onclick = lukKurv;
+document.addEventListener("keydown", e => { if (e.key === "Escape") lukKurv(); });
+document.getElementById("cookieBtn").onclick = () => toast("Åbner Shopifys cookiebanner i den rigtige butik.");
+const mb = document.getElementById("menuBtn");
+mb.onclick = () => { const n = document.getElementById("nav"); n.classList.toggle("open"); mb.setAttribute("aria-expanded", n.classList.contains("open")); };
+
+/* Start med et realistisk eksempel: én kerne-vare i kurven */
+kurv = [{ handle: "marble-explorer-kuglebane-trae", antal: 1 }];
+tegnKurv();
+vis(location.hash === "#produkt" ? "prod:marble-explorer-kuglebane-trae" : "home", false);
+</script>
