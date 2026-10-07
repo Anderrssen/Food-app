@@ -12,3 +12,4 @@ node_modules/
 # Indeholder kostpriser – må ikke i det offentlige repo
 products-med-kostpris.csv
 *.xlsx
+__pycache__/
