@@ -1,0 +1,34 @@
+{% comment %}
+  Big Kid Club: viser, hvor meget kunden mangler for at få fri fragt.
+  Grænsen sættes i Temaindstillinger → Big Kid Club. Den faktiske fragtpris
+  styres i Shopify-admin under Indstillinger → Forsendelse og levering, og de to
+  skal stemme overens.
+
+  Usage:
+  {% render 'bkc-free-shipping-bar' %}
+{% endcomment %}
+{%- liquid
+  assign threshold = settings.bkc_free_shipping_threshold | times: 100
+  if threshold > 0 and cart != empty
+    assign remaining = threshold | minus: cart.total_price
+    assign progress = cart.total_price | times: 100 | divided_by: threshold
+    if progress > 100
+      assign progress = 100
+    endif
+  endif
+-%}
+{%- if threshold > 0 and cart != empty -%}
+  <div class="bkc-shipping-bar{% if remaining <= 0 %} bkc-shipping-bar--done{% endif %}">
+    <p class="bkc-shipping-bar__text">
+      {%- if remaining > 0 -%}
+        {%- capture amount -%}<strong>{{ remaining | money_without_trailing_zeros }}</strong>{%- endcapture -%}
+        {{ settings.bkc_free_shipping_text | escape | replace: '[beløb]', amount }}
+      {%- else -%}
+        {{ settings.bkc_free_shipping_done_text | escape }}
+      {%- endif -%}
+    </p>
+    <div class="bkc-shipping-bar__track" aria-hidden="true">
+      <span class="bkc-shipping-bar__fill" style="width: {{ progress }}%;"></span>
+    </div>
+  </div>
+{%- endif -%}

@@ -1466,5 +1466,69 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "Big Kid Club",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Fri fragt-bjælke"
+      },
+      {
+        "type": "paragraph",
+        "content": "Vises i kurven. Selve fragtprisen sættes i Shopify-admin under Indstillinger → Forsendelse og levering. Hold de to tal ens."
+      },
+      {
+        "type": "number",
+        "id": "bkc_free_shipping_threshold",
+        "label": "Fri fragt fra (kr. inkl. moms)",
+        "info": "0 skjuler bjælken",
+        "default": 499
+      },
+      {
+        "type": "text",
+        "id": "bkc_free_shipping_text",
+        "label": "Tekst under grænsen",
+        "info": "[beløb] erstattes af det manglende beløb",
+        "default": "Du mangler [beløb] til fri fragt"
+      },
+      {
+        "type": "text",
+        "id": "bkc_free_shipping_done_text",
+        "label": "Tekst når grænsen er nået",
+        "default": "Du har fri fragt på denne ordre"
+      },
+      {
+        "type": "header",
+        "content": "Tilføj til din ordre"
+      },
+      {
+        "type": "collection",
+        "id": "bkc_upsell_collection",
+        "label": "Kollektion med tilkøbsvarer",
+        "info": "Tom kollektion eller intet valg skjuler sektionen"
+      },
+      {
+        "type": "text",
+        "id": "bkc_upsell_heading",
+        "label": "Overskrift",
+        "default": "Tilføj til din ordre"
+      },
+      {
+        "type": "text",
+        "id": "bkc_upsell_button",
+        "label": "Knaptekst",
+        "default": "Tilføj"
+      },
+      {
+        "type": "range",
+        "id": "bkc_upsell_limit",
+        "label": "Antal varer",
+        "min": 1,
+        "max": 4,
+        "step": 1,
+        "default": 3
+      }
+    ]
   }
 ]

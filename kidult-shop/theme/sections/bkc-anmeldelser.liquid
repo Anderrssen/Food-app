@@ -1,0 +1,85 @@
+{% comment %}
+  Big Kid Club: anmeldelser.
+  Sektionen vises ikke, før der er tilføjet mindst én anmeldelse. Brug kun
+  rigtige anmeldelser fra rigtige kunder, og angiv hvor de kommer fra.
+  Opdigtede anmeldelser er ulovlige efter markedsføringsloven.
+{% endcomment %}
+{%- if section.blocks.size > 0 -%}
+  <div class="color-{{ section.settings.color_scheme }} gradient">
+    <div class="page-width section-{{ section.id }}-padding" style="padding-top: 48px; padding-bottom: 48px;">
+      {%- if section.settings.title != blank -%}
+        <h2 class="h1">{{ section.settings.title | escape }}</h2>
+      {%- endif -%}
+      <ul class="bkc-reviews__grid list-unstyled" role="list">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}>
+            <figure class="bkc-reviews__card">
+              <blockquote class="bkc-reviews__text">{{ block.settings.text | escape | newline_to_br }}</blockquote>
+              <figcaption class="bkc-reviews__meta">
+                {{ block.settings.name | escape }}
+                {%- if block.settings.source != blank %} · {{ block.settings.source | escape }}{% endif -%}
+              </figcaption>
+            </figure>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Anmeldelser",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Sektionen er skjult, indtil du tilføjer en anmeldelse. Brug kun rigtige anmeldelser fra rigtige kunder, og skriv hvor de kommer fra."
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Overskrift",
+      "default": "Det siger andre byggere"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Farveskema",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Anmeldelse",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Anmeldelse (ordret)"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Navn eller initialer",
+          "info": "Kun med kundens tilladelse"
+        },
+        {
+          "type": "text",
+          "id": "source",
+          "label": "Kilde og dato",
+          "info": "Fx Trustpilot, maj 2027"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [
+    {
+      "name": "Anmeldelser"
+    }
+  ]
+}
+{% endschema %}

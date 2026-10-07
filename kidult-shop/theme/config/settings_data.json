@@ -172,10 +172,10 @@
       "predictive_search_show_vendor": false,
       "predictive_search_show_price": false,
       "currency_code_enabled": true,
-      "cart_type": "notification",
+      "cart_type": "drawer",
       "show_vendor": false,
       "show_cart_note": false,
-      "cart_drawer_collection": "",
+      "cart_drawer_collection": "gaveideer",
       "cart_color_scheme": "scheme-1",
       "sections": {
         "main-password-header": {
@@ -190,7 +190,14 @@
             "color_scheme": "scheme-1"
           }
         }
-      }
+      },
+      "bkc_free_shipping_threshold": 499,
+      "bkc_free_shipping_text": "Du mangler [beløb] til fri fragt",
+      "bkc_free_shipping_done_text": "Du har fri fragt på denne ordre",
+      "bkc_upsell_collection": "tilkob",
+      "bkc_upsell_heading": "Tilføj til din ordre",
+      "bkc_upsell_button": "Tilføj",
+      "bkc_upsell_limit": 3
     }
   }
 }

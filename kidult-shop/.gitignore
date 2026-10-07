@@ -8,3 +8,7 @@
 node_modules/
 .DS_Store
 *.log
+
+# Indeholder kostpriser – må ikke i det offentlige repo
+products-med-kostpris.csv
+*.xlsx

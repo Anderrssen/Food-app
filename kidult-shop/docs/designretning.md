@@ -37,23 +37,27 @@ Begge har æ, ø og å. Hvis Theme Editor viser en anden skrift, kan du vælge d
 
 **Øvrige indstillinger:** knapper med 6 px afrundede hjørner, kort og billeder med 8 px. Kort løfter sig let, når man holder musen over dem.
 
-## Logo-tekst
+## Logo
 
-Indtil der er råd til en designer, bruger vi et rent **ordmærke** uden figur, og derfor er der ingen risiko for at ligne andres logoer:
+**Big Kid Club** skrives som et rent ordmærke i små bogstaver: *big kid club*. De små bogstaver tager kanten af det engelske "club" og passer til den rolige tone. Der er ingen figur, så der er ingen risiko for at ligne andres logoer.
 
-- Navnet sættes i **Lora**, i normal skrift med små bogstaver og let øget bogstavafstand (+2 %), i Valnød på lys baggrund og i Papir på mørk.
-- Valgfrit lille kendetegn: en tynd vandret streg i Eg under navnet, der leder tanken hen på en målestok eller en træliste.
-- **Tagline** i Work Sans, versaler, lille størrelse og bred bogstavafstand: *BYG NOGET MED HÆNDERNE*
+- Navnet står i **Lora Medium** med +2 % bogstavafstand, i Valnød på lys baggrund og i Papir på mørk.
+- Under navnet er en tynd streg i Eg, som leder tanken hen på en målestok eller en træliste.
+- **Tagline** i Work Sans Medium, versaler og bred bogstavafstand: *BYG NOGET MED HÆNDERNE*
+- **Favicon:** "bk" i Papir på Patina med en streg i Birk.
 
-Eksempel med navnet Byggestund:
+Filerne ligger i `brand/`:
 
-```
-byggestund
-──────────
-BYG NOGET MED HÆNDERNE
-```
+| Fil | Brug |
+|---|---|
+| `logo-lys.png` | Header på lys baggrund (Theme Editor → Header → Logo, bredde ca. 160 px) |
+| `logo-moerk.png` | Footer og mørke flader |
+| `logo-tagline-lys.png` / `logo-tagline-moerk.png` | Emballage, nyhedsbrev, sociale medier |
+| `favicon.png` | 512 × 512 px. Temaindstillinger → Logo → Favicon og profilbillede på TikTok/Instagram |
 
-Når du har valgt navnet, laver jeg logoet som SVG (lys og mørk version) og et favicon og lægger dem i temaet.
+PNG-filerne er rendret med Lora og Work Sans, som begge er gratis til kommerciel brug (SIL Open Font License). Uploader du intet logo, viser Dawn butiksnavnet i Lora, og det ligner ordmærket.
+
+Navne- og varemærketjek: søg "Big Kid Club" i klasse 28 på dkpto.dk og TMview, før du bruger penge på emballage eller tryk.
 
 ## Billedstil (til fase 2)
 

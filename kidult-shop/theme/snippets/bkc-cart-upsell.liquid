@@ -1,0 +1,59 @@
+{% comment %}
+  Big Kid Club: "Tilføj til din ordre" i kurven.
+  Viser tilgængelige varer fra kollektionen i Temaindstillinger → Big Kid Club,
+  men springer varer over, der allerede ligger i kurven.
+
+  Knapperne er type="button", fordi snippet'en ligger inde i kurvens <form>.
+  Tilføjelsen sker i assets/bkc-cart-upsell.js.
+
+  Usage:
+  {% render 'bkc-cart-upsell' %}
+{% endcomment %}
+{%- liquid
+  assign upsell_collection = settings.bkc_upsell_collection
+  assign limit = settings.bkc_upsell_limit
+  assign cart_product_ids = cart.items | map: 'product_id'
+  assign shown = 0
+-%}
+{%- if upsell_collection != blank and cart != empty -%}
+  {%- capture upsell_items -%}
+    {%- for product in upsell_collection.products -%}
+      {%- if shown >= limit -%}{%- break -%}{%- endif -%}
+      {%- if product.available == false or cart_product_ids contains product.id -%}{%- continue -%}{%- endif -%}
+      {%- assign variant = product.selected_or_first_available_variant -%}
+      {%- assign shown = shown | plus: 1 -%}
+      <li class="bkc-upsell__item">
+        <a href="{{ product.url }}" class="bkc-upsell__media" tabindex="-1" aria-hidden="true">
+          {%- if product.featured_media -%}
+            {{ product.featured_media | image_url: width: 160 | image_tag: loading: 'lazy', width: 80, height: 80, alt: '' }}
+          {%- else -%}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {%- endif -%}
+        </a>
+        <div class="bkc-upsell__info">
+          <a href="{{ product.url }}" class="bkc-upsell__title">{{ product.title | escape }}</a>
+          <span class="bkc-upsell__price">{{ variant.price | money }}</span>
+        </div>
+        <button
+          type="button"
+          class="button button--secondary bkc-upsell__button"
+          data-bkc-add
+          data-variant-id="{{ variant.id }}"
+          aria-label="{{ settings.bkc_upsell_button | escape }}: {{ product.title | escape }}"
+        >
+          {{ settings.bkc_upsell_button | escape }}
+        </button>
+      </li>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  {%- if shown > 0 -%}
+    <bkc-upsell class="bkc-upsell">
+      <h2 class="bkc-upsell__heading h5">{{ settings.bkc_upsell_heading | escape }}</h2>
+      <ul class="bkc-upsell__list list-unstyled" role="list">
+        {{ upsell_items }}
+      </ul>
+      <p class="bkc-upsell__error" data-bkc-error role="alert" hidden></p>
+    </bkc-upsell>
+  {%- endif -%}
+{%- endif -%}

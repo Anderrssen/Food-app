@@ -1,0 +1,115 @@
+/* Big Kid Club: egne komponenter oven på Dawn */
+
+/* Fri-fragt-bjælke */
+.bkc-shipping-bar {
+  margin: 0 0 1.6rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: var(--text-boxes-radius, 8px);
+  background: rgba(var(--color-foreground), 0.05);
+}
+.bkc-shipping-bar__text {
+  margin: 0 0 0.8rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
+.bkc-shipping-bar__track {
+  height: 0.6rem;
+  border-radius: 1rem;
+  background: rgba(var(--color-foreground), 0.12);
+  overflow: hidden;
+}
+.bkc-shipping-bar__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: rgb(var(--color-button));
+  transition: width 0.4s ease;
+}
+
+/* Tilføj til din ordre */
+.bkc-upsell {
+  display: block;
+  margin: 2.4rem 0 1.6rem;
+  padding-top: 2rem;
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+.bkc-upsell__heading {
+  margin: 0 0 1.2rem;
+}
+.bkc-upsell__list {
+  display: grid;
+  gap: 1.2rem;
+  margin: 0;
+}
+.bkc-upsell__item {
+  display: grid;
+  grid-template-columns: 6.4rem 1fr auto;
+  align-items: center;
+  gap: 1.2rem;
+}
+.bkc-upsell__media img,
+.bkc-upsell__media svg {
+  display: block;
+  width: 6.4rem;
+  height: 6.4rem;
+  object-fit: cover;
+  border-radius: var(--media-radius, 8px);
+  background: rgba(var(--color-foreground), 0.04);
+}
+.bkc-upsell__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.bkc-upsell__title {
+  color: rgb(var(--color-foreground));
+  text-decoration: none;
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+.bkc-upsell__title:hover {
+  text-decoration: underline;
+}
+.bkc-upsell__price {
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+.bkc-upsell__button.button {
+  min-width: auto;
+  min-height: 3.6rem;
+  padding: 0 1.4rem;
+  font-size: 1.3rem;
+}
+.bkc-upsell__button[aria-busy='true'] {
+  opacity: 0.6;
+  cursor: progress;
+}
+.bkc-upsell__error {
+  margin: 1rem 0 0;
+  font-size: 1.3rem;
+  color: rgb(var(--color-foreground));
+}
+
+/* Anmeldelser */
+.bkc-reviews__grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(26rem, 1fr));
+  margin: 0;
+}
+.bkc-reviews__card {
+  margin: 0;
+  padding: 2.4rem;
+  border-radius: var(--text-boxes-radius, 8px);
+  background: rgba(var(--color-foreground), 0.04);
+}
+.bkc-reviews__text {
+  margin: 0 0 1.2rem;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+.bkc-reviews__meta {
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.75);
+}

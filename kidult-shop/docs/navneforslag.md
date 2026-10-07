@@ -1,4 +1,6 @@
-# Navneforslag: vælg ét, før det tages i brug
+# Navneforslag
+
+> **Valgt: Big Kid Club** (bigkidclub.dk), Simons eget forslag, 7. oktober 2026. Forslagene herunder gemmes som baggrund.
 
 Kriterier: let at sige og stave på dansk, ingen æ/ø/å i domænet, passer til både træ/mekanik og book nooks, ingen henvisning til eksisterende legetøjsmærker (LEGO, Ugears, ROKR, Rolife, Metal Earth osv.).
 

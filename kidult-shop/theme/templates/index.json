@@ -1,75 +1,220 @@
 {
   "sections": {
-    "image_banner": {
+    "hero": {
       "type": "image-banner",
       "blocks": {
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
+            "heading": "Byg noget med hænderne",
             "heading_size": "h0"
           }
         },
-        "button": {
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Mekaniske træmodeller, book nooks og metalmodeller til voksne. Et skærmfrit projekt til en rolig aften, eller en gave, der bliver bygget og husket.",
+            "text_style": "body"
+          }
+        },
+        "buttons": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
+            "button_label_1": "Find dit næste projekt",
             "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_style_secondary_1": false,
+            "button_label_2": "Gaveidéer",
+            "button_link_2": "shopify://collections/gaveideer",
+            "button_style_secondary_2": true
           }
         }
       },
       "block_order": [
         "heading",
-        "button"
+        "text",
+        "buttons"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
+        "image_overlay_opacity": 30,
         "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
         "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
+        "desktop_content_position": "middle-left",
+        "desktop_content_alignment": "left",
+        "show_text_box": true,
+        "color_scheme": "scheme-1",
         "stack_images_on_mobile": false,
-        "show_text_below": false
+        "mobile_content_alignment": "left",
+        "show_text_below": true
       }
     },
-    "featured_collection": {
+    "kollektioner": {
+      "type": "collection-list",
+      "blocks": {
+        "mekanisk": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "mekaniske-modeller"
+          }
+        },
+        "booknooks": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "book-nooks-miniaturehuse"
+          }
+        },
+        "metal": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "metalmodeller"
+          }
+        }
+      },
+      "block_order": [
+        "mekanisk",
+        "booknooks",
+        "metal"
+      ],
+      "settings": {
+        "title": "Hvad vil du bygge?",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 48,
+        "padding_bottom": 36
+      }
+    },
+    "saadan": {
+      "type": "multicolumn",
+      "blocks": {
+        "vaelg": {
+          "type": "column",
+          "settings": {
+            "title": "1. Vælg",
+            "text": "<p>Find et sæt, der passer til dit humør og din tid: en hurtig metalmodel til en enkelt aften eller et mekanisk projekt over flere weekender. Hver vare har byggetid og sværhedsgrad.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "byg": {
+          "type": "column",
+          "settings": {
+            "title": "2. Byg",
+            "text": "<p>Alle dele er skåret på forhånd, og der følger en trin-for-trin-vejledning med. Læg telefonen væk, sæt en kop kaffe frem, og byg et stykke ad gangen.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "udstil": {
+          "type": "column",
+          "settings": {
+            "title": "3. Udstil",
+            "text": "<p>Når den sidste del sidder, har du noget at stille på hylden, skrivebordet eller i reolen mellem bøgerne. Og en god historie om, hvordan den blev til.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "vaelg",
+        "byg",
+        "udstil"
+      ],
+      "settings": {
+        "title": "Sådan virker det",
+        "heading_size": "h1",
+        "image_width": "full",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 3,
+        "column_alignment": "left",
+        "background_style": "primary",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 48,
+        "padding_bottom": 48
+      }
+    },
+    "gaveideer": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
+        "title": "Gaveidéer",
+        "heading_size": "h1",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
+        "collection": "gaveideer",
+        "products_to_show": 4,
         "columns_desktop": 4,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
-        "view_all_style": "solid",
+        "view_all_style": "link",
         "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
+        "swipe_on_mobile": true,
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "columns_mobile": "2",
-        "padding_top": 44,
+        "padding_top": 48,
         "padding_bottom": 36
+      }
+    },
+    "anmeldelser": {
+      "type": "bkc-anmeldelser",
+      "settings": {
+        "title": "Det siger andre byggere",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "nyhedsbrev": {
+      "type": "newsletter",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Månedens byggesæt i din indbakke",
+            "heading_size": "h1"
+          }
+        },
+        "text": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Højst én mail om måneden med nye sæt, byggetips og gaveidéer. Du kan altid afmelde dig med ét klik.</p>"
+          }
+        },
+        "form": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "form"
+      ],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "full_width": true,
+        "padding_top": 48,
+        "padding_bottom": 56
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "hero",
+    "kollektioner",
+    "saadan",
+    "gaveideer",
+    "anmeldelser",
+    "nyhedsbrev"
   ]
 }

@@ -1,17 +1,25 @@
-# Kidult-shop (arbejdstitel)
+# Big Kid Club
 
 Dansk Shopify-webshop med hobbysæt til voksne: mekaniske 3D-træmodeller, book nooks, miniaturehuse, 3D-metalmodeller og små desk toys.
 
-Butiksnavnet er ikke valgt endnu, se [`docs/navneforslag.md`](docs/navneforslag.md).
+> **Repoet er offentligt.** Læg aldrig kostpriser, marginer, `.env` eller kundedata i git. `.gitignore` udelukker `.env`, `*.xlsx` og `products-med-kostpris.csv`.
 
 ## Struktur
 
 ```
 kidult-shop/
 ├── theme/                 Custom tema baseret på Dawn 16.0.0 (Shopify)
+├── products.csv           11 varer til Shopify-import (kladder, lager 0)
+├── scripts/
+│   └── byg_products_csv.py   Kilden til products.csv: ret tekster og priser her
+├── brand/                 Logo (lys/mørk, med/uden tagline) og favicon
 ├── docs/
-│   ├── navneforslag.md    5 navneforslag (vælg ét)
-│   └── designretning.md   Farver, typografi, logo-tekst
+│   ├── produkter.md       Import, tags, kilder og TJEK-liste
+│   ├── kollektioner.md    De 6 kollektioner og deres regler
+│   ├── billedliste.md     Billeder du skal hente eller tage
+│   ├── kurv-og-forside.md Forside, fri-fragt-bjælke og tilkøb i kurven
+│   ├── designretning.md   Farver, typografi, logo
+│   └── navneforslag.md    Navneovervejelser (valgt: Big Kid Club)
 ├── .env.example           Skabelon til miljøvariabler (kopiér til .env)
 └── README.md
 ```
@@ -60,6 +68,6 @@ Dawn indeholder allerede danske oversættelser (`theme/locales/da.json`). Sæt b
 ## Faser
 
 - [x] **Fase 1**: Fundament: repo, tema, navneforslag, designretning
-- [ ] **Fase 2**: Produkt-CSV, kollektioner, forside, tilkøb og fri-fragt-bjælke i kurven
+- [x] **Fase 2**: Produkt-CSV, kollektioner, forside, tilkøb og fri-fragt-bjælke i kurven
 - [ ] **Fase 3**: Handelsbetingelser, privatliv, cookies, GPSR, `LAUNCH_CHECKLIST.md`
 - [ ] **Fase 4**: TikTok-idéer, nyhedsbreve, SEO
